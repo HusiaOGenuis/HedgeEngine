@@ -1,0 +1,4 @@
+{
+  "max_risk": 0.02,
+  "score_threshold": 0.60,
+  "correlation_penalty": 1.0
