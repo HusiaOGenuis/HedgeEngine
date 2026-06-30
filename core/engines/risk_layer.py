@@ -3,19 +3,10 @@ Institutional Risk Layer - Complete Risk Management
 Version: 2.0.0
 Date: 2026-06-30
 Status: INSTITUTIONAL - COMPREHENSIVE RISK MANAGEMENT
-
-Integrates:
-- Portfolio Risk
-- Sector Risk
-- Correlation Risk
-- Volatility Scaling
-- Dynamic Risk
-- Drawdown Scaling
-- Capital State
-- Regime Risk
 """
 
 import logging
+import json  # <-- ADDED THIS
 import math
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -647,12 +638,6 @@ if __name__ == "__main__":
     adjusted = risk_layer.get_risk_adjusted_weights(weights, metrics)
     print(f"Original weights: {weights}")
     print(f"Adjusted weights: {adjusted}")
-    
-    # Test regime adjustment
-    print("\n🌍 Testing regime adjustments...")
-    for regime in ["bullish", "bearish", "crisis"]:
-        adj = risk_layer.apply_regime_adjustment(metrics, regime)
-        print(f"  {regime}: position_multiplier={adj['position_size_multiplier']}")
     
     print("\n" + "=" * 70)
     print("RISK LAYER TEST COMPLETE")
