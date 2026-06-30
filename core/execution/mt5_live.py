@@ -1,27 +1,34 @@
 import MetaTrader5 as mt5
 
-class MT5Bridge:
+def get_open_positions():
 
-    def __init__(self):
-        mt5.initialize()
+    positions = mt5.positions_get()
 
-    def execute(self, signal):
+    data = []
 
-        lot = round(signal["recommended_risk"] * 10, 2)
+    if positions:
+        for p in positions:
+            data.append({
+                "symbol": p.symbol,
+                "volume": p.volume,
+                "price_open": p.price_open,
+                "current_price": p.price_current,
+                "profit": p.profit
+            })
 
-        request = {
-            "action": mt5.TRADE_ACTION_DEAL,
-            "symbol": "EURUSD",
-            "volume": lot,
-            "type": mt5.ORDER_TYPE_BUY,
-            "price": mt5.symbol_info_tick("EURUSD").ask,
-            "deviation": 10,
-            "magic": 123456,
-            "comment": "HedgeEngine",
-            "type_time": mt5.ORDER_TIME_GTC,
-            "type_filling": mt5.ORDER_FILLING_IOC,
-        }
+    return data
 
-        result = mt5.order_send(request)
 
-        print("MT5 EXECUTION:", result)
+def get_account_info():
+
+    acc = mt5.account_info()
+
+    if not acc:
+        return {}
+
+    return {
+        "balance": acc.balance,
+        "equity": acc.equity,
+        "margin": acc.margin,
+        "free_margin": acc.margin_free
+    }
