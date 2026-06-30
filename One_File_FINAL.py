@@ -8,6 +8,7 @@ MAX_POSITIONS = 5            # Cap open trades
 ENABLE_SHORTS = True         # Allow SELL trades
 
 from execution_engine import ExecutionEngine
+from order_executor import place_order, smart_execute, execution_engine
 engine = ExecutionEngine()
 
 import MetaTrader5 as mt5
@@ -33,11 +34,6 @@ def get_valid_volume(symbol):
     volume = max(min_vol, min(volume, max_vol))
 
     return float(volume)
-
-
-def place_order(symbol, volume=None, direction=1):
-    smart_execute(symbol, direction)
-
 
 def already_open(symbol):
     positions = mt5.positions_get(symbol=symbol)
